@@ -1,5 +1,3 @@
-" git clone https://github.com/junegunn/vim-plug.git ~/.vim/autoload/plug.vim
-
 " Gneral SETTINGS:{{{1
 " ---------- General Settings ----------
 
@@ -107,77 +105,93 @@ let OpenDir=system("pwd")
 nmap <silent> <leader>cd :exe 'cd ' . OpenDir<cr>:pwd<cr>
 
 
-" VIM PLUGGNED SEETING:{{{1
+" Vundle SETTINGS:{{{1
+"""""""""""""""""Vundle"""""""""""""""""""""
+set shell=/bin/bash
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Make sure you use single quotes
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-" Plug 'junegunn/vim-easy-align'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-" Any valid git URL is allowed
-" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" If the vim script name is haved, then  rename the vim script.
+"Plugin 'user/L9', {'name': 'newL9'}
 
-" Multiple Plug commands can be written in a single line using | separators
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" from vim sripts.
 
-" On-demand loading
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" The left tarlist
+Plugin 'taglist.vim'
 
-" Using a non-master branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-" Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-" Plug '~/my-prototype-plugin'
+" from github.
 
 " The monokai color scheme.
-Plug 'filfirst/monota'
+Plugin 'filfirst/Monota'
 
 " The project source tree browser.
-Plug 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
+
+" Find file.
+Plugin 'kien/ctrlp.vim'
+
+" Symbol aligning.
+Plugin 'godlygeek/tabular'
+
+" Automatic annotation.
+Plugin 'ddollar/nerdcommenter'
 
 " The enhanced editor status bar.
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" Snippets.
+Plugin 'honza/vim-snippets'
 
 " The enhanced C++ syntax highlighting.
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " The auto-complete module.
-Plug 'valloric/youcompleteme'
+Plugin 'Valloric/YouCompleteMe'
 
-Plug 'vim-scripts/taglist.vim'
+" vim syntastic
+" Plugin 'vim-syntastic/syntastic'
 
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-unimpaired'
-Plug 'yggdroot/leaderf'
-Plug 'shougo/echodoc'
-Plug 'w0rp/ale'
+" auto insert.
+" Plugin 'sirver/ultisnips'
 
-
-" Plug 'kana/vim-textobj-user'
-" Plug 'kana/vim-textobj-indent'
-" Plug 'kana/vim-textobj-syntax'
-" Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
-" Plug 'sgur/vim-textobj-parameter'
-
-" Initialize plugin system
-call plug#end()
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 
 
@@ -258,30 +272,6 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 "let g:syntastic_check_on_wq = 0
 
 
-" Ale SETTING:{{{1
-let g:ale_linters_explicit = 1
-let g:ale_completion_delay = 500
-let g:ale_echo_delay = 20
-let g:ale_lint_delay = 500
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++11'
-let g:ale_c_cppcheck_options = ''
-let g:ale_cpp_cppcheck_options = ''
-
-let g:ale_sign_error = "\ue009\ue009"
-hi! clear SpellBad
-hi! clear SpellCap
-hi! clear SpellRare
-hi! SpellBad gui=undercurl guisp=red
-hi! SpellCap gui=undercurl guisp=blue
-hi! SpellRare gui=undercurl guisp=magenta
-
-
 " UltiSnips SETTINGS:{{{1
 let g:UltiSnipsExpandTrigger         = "<C-h>"
 let g:UltiSnipsJumpForwardTrigger    = "<C-j>"
@@ -309,22 +299,6 @@ let Tlist_Enable_Fold_Column=0
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Auto_Update=1
 
-
-" Vim-gutentags SETTINGS:{{{1
-" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
-
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
-
-" 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 
 " Catgs SEETING:{{{1

@@ -5,8 +5,8 @@ set autoread
 set autowrite
 set ai
 set bs=2
-" set backspace=eol,start,indent
-set backspace=2
+set backspace=eol,start,indent
+" set backspace=2
 set nobackup
 set cindent
 set cinoptions=:0
@@ -48,6 +48,7 @@ set smartcase
 set so=7
 set t_Co=256
 set termencoding=utf-8
+" Set the line max charcher.
 set textwidth=140
 set whichwrap=h,l
 set wildignore=*.bak,*.o,*.e,*~
@@ -158,15 +159,39 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " The auto-complete module.
 Plug 'valloric/youcompleteme'
 
-Plug 'vim-scripts/taglist.vim'
+" The line change.
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
 
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'mhinz/vim-signify'
+" More vim key.
 Plug 'tpope/vim-unimpaired'
-Plug 'yggdroot/leaderf'
-Plug 'shougo/echodoc'
-Plug 'w0rp/ale'
 
+" Find file.
+Plug 'yggdroot/leaderf', { 'do': './install.sh' }
+
+" The static synic check.
+Plug 'w0rp/ale'
+Plug 'danmar/cppcheck'
+
+" A class outline viewer for vim.
+Plug 'majutsushi/tagbar'
+
+" The auto compiter.
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'universal-ctags/ctags'
+
+" The source and include file change.
+Plug 'vim-scripts/a.vim'
+
+" The TODO and FIXME task list.
+Plug 'vim-scripts/TaskList.vim'
+
+" Auto mode.
+"Plug 'sirver/ultisnips'
+"Plug 'honza/vim-snippets'
 
 " Plug 'kana/vim-textobj-user'
 " Plug 'kana/vim-textobj-indent'
@@ -185,26 +210,50 @@ syntax on
 colorscheme Monota           " Set the color scheme is Monota.
 
 
+" Tagbar SETTING:{{{1
+let g:tagbar_left = 1
+
+
+" Signify SETTING:{{{1
+set updatetime=100
+let g:signify_vcs_list = [ 'git' ]
+let g:signify_sign_show_text = 1
+
+
+" TaskList SETTINGS:{{{1
+let g:tlTokenList = ["FIXME", "TODO", "HACK", "NOTE", "WARN", "MODIFY"]
+let g:tlRememberPosition = 1
+
+"LEADERF SETTINGS:{{{1
+let g:Lf_ShortcutF = '<c-p>'
+let g:Lf_ShortcutB = '<m-n>'
+noremap <c-n> :LeaderfMru<cr>
+noremap <m-p> :LeaderfFunction!<cr>
+noremap <m-n> :LeaderfBuffer<cr>
+noremap <m-m> :LeaderfTag<cr>
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+
 
 "NERDTree SETTINGS:{{{1
 " ---------- NerdTree Project Browser ----------
 nnoremap <C-n> :NERDTreeToggle<CR>
 
 let g:NERDTreeWinPos="left"
-let g:NERDTreeWinSize=25
+let g:NERDTreeWinSize=40
 let g:NERDTreeShowLineNumbers=1
 let g:NERDTreeQuitOnOpen=1
 
 let NERDTreeShowHidden = 1
 autocmd StdinReadPre * let s:std_in = 1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-
-
-" CtrIP  SETTINGS:{{{1
-" <c-p> to use the function
-" <c-c> to end use
-
 
 
 "Highlighting SETTINGS:{{{1
@@ -233,31 +282,47 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+" let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" let g:ycm_complete_in_strings=1
+" let g:ycm_key_invoke_completion = '<c-z>'
 
+let g:ycm_semantic_triggers =  {
+           \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+           \ 'cs,lua,javascript': ['re!\w{2}'],
+           \ }
 
-"   Syntastic SETTINGS:{{{1
-"""""""""""syntastic""""""""""""""""""""
-"let g:syntastic_mode_map = {'mode':'active','active_filetypes':[],'passive_filetypes':[]}
-"let g:syntastic_check_on_open=1
-"let g:syntastic_cpp_include_dirs=['/usr/include']
-"let g:syntastic_cpp_remove_include_errors=1
-"let g:syntastic_cpp_check_header=1
-"let g:syntastic_cpp_compiler='clang++'
-"let g:syntastic_cpp_compiler_options='-std=c++11 -Wall -stdlib=libc++ -Wextra -Wpendantic'
-"let g:syntastic_error_symbol='>>'
-"let g:syntastic_warning_symbol='!'
-"let g:syntastic_enable_balloons=1
-"let g:syntastic_enable_highlighting=1
-"let g:syntastic_enable_signs=1
-"let g:syntastic_python_python_exec='/bin/python3'
+let g:ycm_filetype_whitelist = {
+            \ "c":1,
+            \ "cpp":1,
+            \ "go":1,
+            \ "python":1,
+            \ "sh":1,
+            \ "zsh":1,
+            \ }
 
-
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+let g:ycm_filetype_blacklist = {
+        \ 'markdown' : 1,
+        \ 'text' : 1,
+        \ 'pandoc' : 1,
+        \ 'infolog' : 1,
+        \}
 
 
 " Ale SETTING:{{{1
 let g:ale_linters_explicit = 1
+let g:ale_linters = {
+  \   'csh': ['shell'],
+  \   'zsh': ['shell'],
+  \   'go': ['gofmt', 'golint'],
+  \   'python': ['flake8', 'mypy', 'pylint'],
+  \   'c': ['gcc', 'cppcheck'],
+  \   'cpp': ['gcc', 'cppcheck'],
+  \   'text': [],
+  \}
 let g:ale_completion_delay = 500
 let g:ale_echo_delay = 20
 let g:ale_lint_delay = 500
@@ -271,16 +336,9 @@ let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++11'
 let g:ale_c_cppcheck_options = ''
 let g:ale_cpp_cppcheck_options = ''
 
-let g:ale_sign_error = "\ue009\ue009"
-hi! clear SpellBad
-hi! clear SpellCap
-hi! clear SpellRare
-hi! SpellBad gui=undercurl guisp=red
-hi! SpellCap gui=undercurl guisp=blue
-hi! SpellRare gui=undercurl guisp=magenta
-
 
 " UltiSnips SETTINGS:{{{1
+" Have some program can use backspace.
 let g:UltiSnipsExpandTrigger         = "<C-h>"
 let g:UltiSnipsJumpForwardTrigger    = "<C-j>"
 let g:UltiSnipsListSnippets          = "<C-i>"
@@ -293,37 +351,21 @@ let g:UltiSnipsJumpBackwardTrigger   = "<C-k>"
 " <leater>c<SPACE>  == cancle //
 
 
-" Taglist SETTINGS:{{{1
-""""""""""""Taglist""""""""""""""""""
-let Tlist_WinWidth=34
-let Tlist_Auto_Open=0
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Use_SingleClick=1
-let g:Tlist_Auto_Update=1
-let Tlist_Process_File_Always=1
-let Tlist_Enable_Fold_Column=0
-"let Tlist_Use_Right_Window=1
-let Tlist_File_Fold_Auto_Close=1
-let Tlist_Auto_Update=1
-
-
 " Vim-gutentags SETTINGS:{{{1
-" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
-" 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
 
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
 let s:vim_tags = expand('~/.cache/tags')
 let g:gutentags_cache_dir = s:vim_tags
 
-" 配置 ctags 的参数
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
 
 " Catgs SEETING:{{{1
 """"""""""""""Ctags""""""""""""""""""
@@ -341,7 +383,6 @@ set autochdir
 map ta :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 
-
 " Function SETTINGS:{{{1
 function!UpdateTagsFile()
 silent!ctags -R --c++-kinds=+p --fields=+ianS --extra=+q
@@ -356,6 +397,7 @@ endfunction
 
 
 " NEWnamp SETTINGS:{{{1
-nmap <F2> :Tlist<CR>
+nmap <F2> :TagbarToggle<CR>
 nmap <F3> :NERDTreeToggle<CR>
+nmap <F4> :TaskList<CR>
 nmap <F9> :call RunShell("Generate tags", "ctags -R * --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>

@@ -48,6 +48,7 @@ set smartcase
 set so=7
 set t_Co=256
 set termencoding=utf-8
+
 " Set the line max charcher.
 set textwidth=140
 set whichwrap=h,l
@@ -157,7 +158,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " The auto-complete module.
-Plug 'valloric/youcompleteme'
+Plug 'valloric/youcompleteme', { 'do': 'python3 install.py --clang-completer'}
 
 " The line change.
 if has('nvim') || has('patch-8.0.902')
@@ -174,6 +175,7 @@ Plug 'yggdroot/leaderf', { 'do': './install.sh' }
 
 " The static synic check.
 Plug 'w0rp/ale'
+" The cppcheck how to install can visit https://github.com/danmar/cppcheck
 Plug 'danmar/cppcheck'
 
 " A class outline viewer for vim.
@@ -202,6 +204,9 @@ Plug 'vim-scripts/TaskList.vim'
 " Initialize plugin system
 call plug#end()
 
+" Some vim config refence.
+" https://carecraft.github.io/language-instrument/2018/06/config_vim/
+" http://www.skywind.me/blog/archives/2084
 
 
 " Monota SETTINGS:{{{1

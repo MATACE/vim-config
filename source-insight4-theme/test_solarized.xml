@@ -2268,7 +2268,7 @@
 		<Style Name="Debug" TextColor="#ff0000" Italic="1" Underline="Dotted" />
 		<Style Name="Null Value" TextColor="#b58800" />
 		<Style Name="System" TextColor="#008000" />
-		<Style Name="Declaration" Bold="1" TextColor="#000080" />
+		<Style Name="Declaration" Bold="1" TextColor="#cb4d16" />
 		<Style
 			Name="Ref To Local"
 			TextColor="#93a2a2"
@@ -2317,7 +2317,7 @@
 			Bold="1"
 			ParentStyle="Reference"
 			/>
-		<Style Name="Selection" TextColor="#ffffff" BackColor="#274542" />
+		<Style Name="Selection" TextColor="#b58800" BackColor="#274542" />
 		<Style Name="Declare Namespace" ParentStyle="Declaration" />
 		<Style Name="Ref to Namespace" ParentStyle="Reference" />
 		<Style
@@ -2342,8 +2342,8 @@
 			/>
 		<Style
 			Name="Declare Macro"
-			ParentStyle="Declaration"
 			TextColor="#2689d2"
+			ParentStyle="Declaration"
 			/>
 		<Style
 			Name="Declare Struct"
@@ -2367,8 +2367,8 @@
 		<Style Name="Declare Enum" ParentStyle="Declare Struct" />
 		<Style
 			Name="Declare Enum Const"
-			ParentStyle="Declaration"
 			TextColor="#2689d2"
+			ParentStyle="Declaration"
 			/>
 		<Style Name="Declare Edit Macro" ParentStyle="Declare Function" />
 		<Style
@@ -2426,8 +2426,8 @@
 			/>
 		<Style
 			Name="Ref to Enum"
-			ParentStyle="Reference"
 			TextColor="#2689d2"
+			ParentStyle="Reference"
 			/>
 		<Style Name="Ref to Custom" ParentStyle="Reference" />
 		<Style Name="Ref to EdMacro" ParentStyle="Reference" />
@@ -2437,7 +2437,11 @@
 		<Style Name="Ref to Proto" ParentStyle="Ref to Func" />
 		<Style Name="Ref to Preproc" ParentStyle="Reference" />
 		<Style Name="Ref to Search" ParentStyle="Reference" />
-		<Style Name="Ref to Label" ParentStyle="Reference" />
+		<Style
+			Name="Ref to Label"
+			TextColor="#b58800"
+			ParentStyle="Reference"
+			/>
 		<Style
 			Name="Ref to Member"
 			TextColor="#2689d2"
@@ -2570,7 +2574,11 @@
 		<Style Name="Declare C# Indexer" ParentStyle="Declaration" />
 		<Style Name="Ref to C# Event" ParentStyle="Reference" />
 		<Style Name="Ref to C# Indexer" ParentStyle="Reference" />
-		<Style Name="Ref to Alias" ParentStyle="Reference" />
+		<Style
+			Name="Ref to Alias"
+			ParentStyle="Reference"
+			TextColor="#b58800"
+			/>
 		<Style Name="Declare Alias" ParentStyle="Declaration" />
 		<Style Name="CDATA Section" TextColor="#808080" />
 		<Style

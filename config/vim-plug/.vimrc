@@ -1,3 +1,111 @@
+" VIM PLUGGNED SEETING:{{{1
+
+" First Set The Vim Plug config Setting
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+" Plug 'junegunn/vim-easy-align'
+
+" Any valid git URL is allowed
+" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-master branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plugin options
+" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+" Plug '~/my-prototype-plugin'
+
+" The monokai color scheme.
+Plug 'filfirst/monota'
+
+" The project source tree browser.
+Plug 'scrooloose/nerdtree'
+
+" The enhanced editor status bar.
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" The enhanced C++ syntax highlighting.
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" The auto-complete module.
+Plug 'valloric/youcompleteme', { 'do': 'python3 install.py --clang-completer'}
+
+" The line change.
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
+
+" More vim key.
+Plug 'tpope/vim-unimpaired'
+
+" Find file.
+Plug 'yggdroot/leaderf', { 'do': './install.sh' }
+
+" The static synic check.
+Plug 'w0rp/ale'
+" The cppcheck how to install can visit https://github.com/danmar/cppcheck
+Plug 'danmar/cppcheck'
+
+" A class outline viewer for vim.
+Plug 'majutsushi/tagbar'
+
+" The auto compiter.
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'universal-ctags/ctags'
+
+" The source and include file change.
+Plug 'vim-scripts/a.vim'
+
+" The TODO and FIXME task list.
+Plug 'vim-scripts/TaskList.vim'
+
+" Auto mode.
+"Plug 'sirver/ultisnips'
+"Plug 'honza/vim-snippets'
+
+Plug 'chun-yang/auto-pairs'
+" Cpp Mode offer the cpp head file and src switch
+Plug 'chxuan/cpp-mode'
+Plug 'joom/vim-commentary'
+
+" Plug 'kana/vim-textobj-user'
+" Plug 'kana/vim-textobj-indent'
+" Plug 'kana/vim-textobj-syntax'
+" Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+" Plug 'sgur/vim-textobj-parameter'
+
+" Initialize plugin system
+call plug#end()
+
+" Some vim config refence.
+" https://carecraft.github.io/language-instrument/2018/06/config_vim/
+" http://www.skywind.me/blog/archives/2084
+
+
 " Gneral SETTINGS:{{{1
 " ---------- General Settings ----------
 
@@ -110,114 +218,19 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-
-" VIM PLUGGNED SEETING:{{{1
-
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-" Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
-" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Multiple Plug commands can be written in a single line using | separators
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" On-demand loading
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Using a non-master branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-" Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-" Plug '~/my-prototype-plugin'
-
-" The monokai color scheme.
-Plug 'filfirst/monota'
-
-" The project source tree browser.
-Plug 'scrooloose/nerdtree'
-
-" The enhanced editor status bar.
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" The enhanced C++ syntax highlighting.
-Plug 'octol/vim-cpp-enhanced-highlight'
-
-" The auto-complete module.
-Plug 'valloric/youcompleteme', { 'do': 'python3 install.py --clang-completer'}
-
-" The line change.
-if has('nvim') || has('patch-8.0.902')
-  Plug 'mhinz/vim-signify'
-else
-  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
-endif
-
-" More vim key.
-Plug 'tpope/vim-unimpaired'
-
-" Find file.
-Plug 'yggdroot/leaderf', { 'do': './install.sh' }
-
-" The static synic check.
-Plug 'w0rp/ale'
-" The cppcheck how to install can visit https://github.com/danmar/cppcheck
-Plug 'danmar/cppcheck'
-
-" A class outline viewer for vim.
-Plug 'majutsushi/tagbar'
-
-" The auto compiter.
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'universal-ctags/ctags'
-
-" The source and include file change.
-Plug 'vim-scripts/a.vim'
-
-" The TODO and FIXME task list.
-Plug 'vim-scripts/TaskList.vim'
-
-" Auto mode.
-"Plug 'sirver/ultisnips'
-"Plug 'honza/vim-snippets'
-
-" Plug 'kana/vim-textobj-user'
-" Plug 'kana/vim-textobj-indent'
-" Plug 'kana/vim-textobj-syntax'
-" Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
-" Plug 'sgur/vim-textobj-parameter'
-
-" Initialize plugin system
-call plug#end()
-
-" Some vim config refence.
-" https://carecraft.github.io/language-instrument/2018/06/config_vim/
-" http://www.skywind.me/blog/archives/2084
-
-
 " Monota SETTINGS:{{{1
 " ---------- Monokai color scheme ----------
-syntax on
-colorscheme Monota           " Set the color scheme is Monota.
+" syntax on
+" colorscheme Monota           " Set the color scheme is Monota.
+syntax enable
+set background=dark
+colorscheme solarized
 
+" AutoPairs SETTINGS:{{{1
+" auto completer the ()
+
+" VimCommentary SETTINGS:{{{1
+" gcc to commentary/ gcgc to not commentary
 
 " Tagbar SETTING:{{{1
 let g:tagbar_left = 1
@@ -403,6 +416,16 @@ function! RunShell(Msg, Shell)
 	call system(a:Shell)
 	echon 'done'
 endfunction
+
+" CppMode SETTINGS:{{{1
+" nnoremap <leader>y :CopyCode<cr>
+" nnoremap <leader>p :PasteCode<cr>
+" nnoremap <leader>U :GoToFunImpl<cr>
+" nnoremap <silent> <leader>a :Switch<cr>
+" nnoremap <leader><leader>fp :FormatFunParam<cr>
+" nnoremap <leader><leader>if :FormatIf<cr>
+" nnoremap <leader><leader>t dd :GenTryCatch<cr>
+" xnoremap <leader><leader>t d :GenTryCatch<cr>
 
 
 " NEWnamp SETTINGS:{{{1
